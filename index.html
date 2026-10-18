@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAM RAJ BHAVAN | Digital Menu</title>
+  <style>
+    :root {
+      --primary: #15803d;
+      --primary-dark: #14532d;
+      --accent: #22c55e;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #cbd5e1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.4;
+      padding-bottom: 70px;
+      font-weight: 600;
+    }
+
+    header {
+      background: linear-gradient(135deg, #14532d, #166534);
+      color: #fff;
+      text-align: center;
+      padding: 24px 16px 20px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .tagline {
+      font-size: 1rem;
+      color: #bbf7d0;
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    .veg-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 5px 14px;
+      margin-top: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+    }
+
+    .veg-dot {
+      width: 12px;
+      height: 12px;
+      background: #4ade80;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ade80;
+    }
+
+    /* Sticky Main Navigation Tabs */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      background: #ffffff;
+      z-index: 100;
+      border-bottom: 2px solid var(--border);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .main-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      padding: 10px 12px;
+      background: #f1f5f9;
+    }
+
+    .tab-btn {
+      border: none;
+      outline: none;
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 900;
+      padding: 12px 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      text-transform: uppercase;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 3px 8px rgba(21, 128, 61, 0.35);
+    }
+
+    /* Search Bar */
+    .search-box {
+      padding: 10px 14px;
+      background: #fff;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 11px 16px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      background: #f8fafc;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    /* Sub Category Horizontal Bar for Chinese */
+    .sub-nav {
+      display: flex;
+      overflow-x: auto;
+      gap: 8px;
+      padding: 8px 14px 10px;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      scrollbar-width: none;
+    }
+    .sub-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .sub-btn {
+      white-space: nowrap;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 7px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .sub-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    /* Container */
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 14px;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      margin: 22px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 3px solid #86efac;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      text-transform: uppercase;
+    }
+
+    .section-title span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Food Cards */
+    .item-card {
+      background: var(--card-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 11px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+
+    .item-names {
+      flex: 1;
+    }
+
+    .item-en {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .item-ta {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #64748b;
+      margin-top: 3px;
+    }
+
+    .item-price {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h1>RAM RAJ BHAVAN</h1>
+    <div class="tagline">ராம் ராஜ் பவன் &bull; Pure Veg Restaurant</div>
+    <div class="veg-indicator">
+      <span class="veg-dot"></span> 100% PURE VEGETARIAN
+    </div>
+  </header>
+
+  <!-- STICKY TOP NAVIGATION -->
+  <div class="sticky-header">
+    <div class="main-tabs">
+      <button class="tab-btn active" onclick="switchTab('tiffin', this)">Breakfast / Dinner</button>
+      <button class="tab-btn" onclick="switchTab('lunch', this)">Lunch</button>
+      <button class="tab-btn" onclick="switchTab('chinese', this)">Chinese</button>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="menuSearch" placeholder="🔍 Search menu / உணவுகளைத் தேட..." onkeyup="filterMenu()" />
+    </div>
+
+    <!-- Sub categories navigation (only visible on Chinese tab) -->
+    <div class="sub-nav" id="chineseSubNav" style="display: none;">
+      <a href="#rice" class="sub-btn">Rice & Noodles</a>
+      <a href="#pulao" class="sub-btn">Pulao & Parotta</a>
+      <a href="#starters" class="sub-btn">Chilli & Manchurian</a>
+      <a href="#pepper" class="sub-btn">Pepper & Pallipalayam</a>
+      <a href="#gravies" class="sub-btn">Masala Gravies</a>
+      <a href="#chettinad" class="sub-btn">Chettinad</a>
+      <a href="#roti" class="sub-btn">Roti & Naan</a>
+      <a href="#soup" class="sub-btn">Soups</a>
+    </div>
+  </div>
+
+  <main class="container">
+
+    <!-- ================= 1. BREAKFAST / DINNER ================= -->
+    <section id="tiffin" class="tab-content active">
+      <h2 class="section-title">டிபன் வகைகள் <span>Breakfast & Dinner Specials</span></h2>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">1. Idli</div>
+          <div class="item-ta">இட்லி</div>
+        </div>
+        <div class="item-price">₹12.50</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">2. Roast (Dosa)</div>
+          <div class="item-ta">ரோஸ்ட் (தோசை)</div>
+        </div>
+        <div class="item-price">₹65</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">3. Parotta</div>
+          <div class="item-ta">பரோட்டா</div>
+        </div>
+        <div class="item-price">₹40</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">4. Chapathi</div>
+          <div class="item-ta">சப்பாத்தி</div>
+        </div>
+        <div class="item-price">₹40</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">5. Poori (Set)</div>
+          <div class="item-ta">பூரி செட்</div>
+        </div>
+        <div class="item-price">₹65</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">6. Pongal</div>
+          <div class="item-ta">பொங்கல்</div>
+        </div>
+        <div class="item-price">₹55</div>
+      </div>
+    </section>
+
+    <!-- ================= 2. LUNCH ================= -->
+    <section id="lunch" class="tab-content">
+      <h2 class="section-title">மதிய உணவு <span>Lunch Specials</span></h2>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">Unlimited Meals</div>
+          <div class="item-ta">அன்லிமிடெட் சாப்பாடு</div>
+        </div>
+        <div class="item-price">₹90</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">Curd / Variety Rice</div>
+          <div class="item-ta">தயிர் சாதம் / வெரைட்டி ரைஸ்</div>
+        </div>
+        <div class="item-price">₹50</div>
+      </div>
+
+      <div class="item-card">
+        <div class="item-names">
+          <div class="item-en">Veg / Mushroom Biriyani</div>
+          <div class="item-ta">வெஜ் / காளான் பிரியாணி</div>
+        </div>
+        <div class="item-price">₹70</div>
+      </div>
+    </section>
+
+    <!-- ================= 3. CHINESE (ALL PREVIOUS ITEMS) ================= -->
+    <section id="chinese" class="tab-content">
+
+      <!-- Rice & Noodles -->
+      <h2 class="section-title" id="rice">ஃபிரைடு ரைஸ் & நூடுல்ஸ் <span>Fried Rice & Noodles</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Veg Fried Rice</div><div class="item-ta">வெஜ் பிரைடு ரைஸ்</div></div><div class="item-price">₹100</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Rice</div><div class="item-ta">காளான் ரைஸ்</div></div><div class="item-price">₹120</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Rice</div><div class="item-ta">பன்னீர் ரைஸ்</div></div><div class="item-price">₹130</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Gobi Rice</div><div class="item-ta">கோபி ரைஸ்</div></div><div class="item-price">₹105</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Veg Noodles</div><div class="item-ta">வெஜ் நூடுல்ஸ்</div></div><div class="item-price">₹100</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Noodles</div><div class="item-ta">காளான் நூடுல்ஸ்</div></div><div class="item-price">₹120</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Noodles</div><div class="item-ta">பன்னீர் நூடுல்ஸ்</div></div><div class="item-price">₹130</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mexican Noodles</div><div class="item-ta">மெக்சிக்கன் நூடுல்ஸ்</div></div><div class="item-price">₹155</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Schezwan Veg (Rice / Noodles)</div><div class="item-ta">செஸ்வான் வெஜ் (ரைஸ் / நூடுல்ஸ்)</div></div><div class="item-price">₹110</div></div>
+
+      <!-- Pulao & Parotta -->
+      <h2 class="section-title" id="pulao">புலாவ் & பரோட்டா <span>Pulao & Parotta</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mix Veg Pulao</div><div class="item-ta">மிக்ஸ் வெஜ் புலாவ்</div></div><div class="item-price">₹145</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Pulao</div><div class="item-ta">காளான் புலாவ்</div></div><div class="item-price">₹130</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Veg Pulao</div><div class="item-ta">வெஜ் புலாவ்</div></div><div class="item-price">₹110</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Pulao</div><div class="item-ta">பன்னீர் புலாவ்</div></div><div class="item-price">₹140</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Ghee Rice</div><div class="item-ta">கீ ரைஸ்</div></div><div class="item-price">₹135</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Jeera Rice</div><div class="item-ta">ஜீரா ரைஸ்</div></div><div class="item-price">₹125</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Chilli Parotta</div><div class="item-ta">சில்லி புரோட்டா</div></div><div class="item-price">₹80</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Kothu Parotta</div><div class="item-ta">கொத்து புரோட்டா</div></div><div class="item-price">₹70</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Parotta</div><div class="item-ta">பன்னீர் புரோட்டா</div></div><div class="item-price">₹90</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Parotta</div><div class="item-ta">காளான் புரோட்டா</div></div><div class="item-price">₹80</div></div>
+
+      <!-- Starters & Chilli & Manchurian -->
+      <h2 class="section-title" id="starters">சில்லி & மஞ்சூரியன் <span>Chilli & Manchurian</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Chilli 65</div><div class="item-ta">பன்னீர் சில்லி 65</div></div><div class="item-price">₹140</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Baby Corn Chilli 65</div><div class="item-ta">பேபி கார்ன் சில்லி 65</div></div><div class="item-price">₹120</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Gobi Chilli 65</div><div class="item-ta">கோபி சில்லி 65</div></div><div class="item-price">₹100</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Chilli</div><div class="item-ta">காளான் சில்லி</div></div><div class="item-price">₹120</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Manchurian</div><div class="item-ta">பன்னீர் மஞ்சூரியன்</div></div><div class="item-price">₹160</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Gobi Manchurian</div><div class="item-ta">கோபி மஞ்சூரியன்</div></div><div class="item-price">₹120</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Manchurian</div><div class="item-ta">மஷ்ரூம் மஞ்சூரியன்</div></div><div class="item-price">₹140</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Baby Corn Manchurian</div><div class="item-ta">பேபி கார்ன் மஞ்சூரியன்</div></div><div class="item-price">₹140</div></div>
+
+      <!-- Pepper & Pallipalayam -->
+      <h2 class="section-title" id="pepper">பெப்பர் பிரை & பள்ளிபாளையம் <span>Pepper & Pallipalayam</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Pepper Fry</div><div class="item-ta">பன்னீர் பெப்பர் ஃபிரை</div></div><div class="item-price">₹170</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Pepper Fry</div><div class="item-ta">காளான் பெப்பர் ஃபிரை</div></div><div class="item-price">₹160</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Babycorn Pepper Fry</div><div class="item-ta">பேபி கார்ன் பெப்பர் ஃபிரை</div></div><div class="item-price">₹160</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Pallipalayam</div><div class="item-ta">பன்னீர் பள்ளிபாளையம்</div></div><div class="item-price">₹190</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Pallipalayam</div><div class="item-ta">காளான் பள்ளிபாளையம்</div></div><div class="item-price">₹180</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Babycorn Pallipalayam</div><div class="item-ta">பேபி கார்ன் பள்ளிபாளையம்</div></div><div class="item-price">₹180</div></div>
+
+      <!-- Masala Gravies -->
+      <h2 class="section-title" id="gravies">மசாலா வகைகள் <span>Gravies</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Masala</div><div class="item-ta">மஷ்ரூம் மசாலா</div></div><div class="item-price">₹160</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Masala</div><div class="item-ta">பன்னீர் மசாலா</div></div><div class="item-price">₹170</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Butter Masala</div><div class="item-ta">பன்னீர் பட்டர் மசாலா</div></div><div class="item-price">₹190</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Gobi Masala</div><div class="item-ta">கோபி மசாலா</div></div><div class="item-price">₹140</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Green Peas Masala</div><div class="item-ta">கிரீன் பீஸ் மசாலா</div></div><div class="item-price">₹130</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Aalu Gobi Masala</div><div class="item-ta">ஆலு கோபி மசாலா</div></div><div class="item-price">₹140</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Kadai Paneer Masala</div><div class="item-ta">கடாய் பன்னீர் மசாலா</div></div><div class="item-price">₹180</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Kadai Mushroom Masala</div><div class="item-ta">கடாய் மஷ்ரூம் மசாலா</div></div><div class="item-price">₹170</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Veg Mix Masala</div><div class="item-ta">வெஜ் மிக்ஸ் மசாலா</div></div><div class="item-price">₹130</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Aalu Masala</div><div class="item-ta">ஆலு மசாலா</div></div><div class="item-price">₹140</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Dal Butter Fry Masala</div><div class="item-ta">தால் பட்டர் ஃபிரை மசாலா</div></div><div class="item-price">₹150</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Babycorn Pepper Masala</div><div class="item-ta">பேபிகார்ன் பெப்பர் மசாலா</div></div><div class="item-price">₹170</div></div>
+
+      <!-- Chettinad -->
+      <h2 class="section-title" id="chettinad">செட்டிநாடு மசாலா <span>Chettinad Specials</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Paneer Chettinad Masala</div><div class="item-ta">பன்னீர் செட்டிநாடு மசாலா</div></div><div class="item-price">₹190</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Chettinad Masala</div><div class="item-ta">காளான் செட்டிநாடு மசாலா</div></div><div class="item-price">₹180</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Babycorn Chettinad Masala</div><div class="item-ta">பேபி கார்ன் செட்டிநாடு மசாலா</div></div><div class="item-price">₹180</div></div>
+
+      <!-- Tandoori, Roti & Naan -->
+      <h2 class="section-title" id="roti">தந்தூரி, ரொட்டி, நான் <span>Tandoori & Bread</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Plain Naan</div><div class="item-ta">பிளைன் நான்</div></div><div class="item-price">₹45</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Butter Naan</div><div class="item-ta">பட்டர் நான்</div></div><div class="item-price">₹50</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Plain Roti</div><div class="item-ta">பிளைன் ரொட்டி</div></div><div class="item-price">₹35</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Butter Roti</div><div class="item-ta">பட்டர் ரொட்டி</div></div><div class="item-price">₹45</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Plain Kulcha</div><div class="item-ta">பிளைன் குல்சா</div></div><div class="item-price">₹50</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Butter Kulcha</div><div class="item-ta">பட்டர் குல்சா</div></div><div class="item-price">₹55</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Garlic Naan</div><div class="item-ta">கார்லிக் நான்</div></div><div class="item-price">₹55</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Tandoori Parotta</div><div class="item-ta">தந்தூரி புரோட்டா</div></div><div class="item-price">₹55</div></div>
+
+      <!-- Soups -->
+      <h2 class="section-title" id="soup">சூப் வகைகள் <span>Soups</span></h2>
+      <div class="item-card"><div class="item-names"><div class="item-en">Veg Soup</div><div class="item-ta">வெஜ் சூப்</div></div><div class="item-price">₹50</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Tomato Soup</div><div class="item-ta">தக்காளி சூப்</div></div><div class="item-price">₹50</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Mushroom Soup</div><div class="item-ta">காளான் சூப்</div></div><div class="item-price">₹60</div></div>
+      <div class="item-card"><div class="item-names"><div class="item-en">Hot Sour & Veg Soup</div><div class="item-ta">ஹாட் சோர் & வெஜ் சூப்</div></div><div class="item-price">₹60</div></div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>RAM RAJ BHAVAN • Pure Vegetarian</p>
+    <p style="margin-top: 4px;">Thank you for dining with us!</p>
+  </footer>
+
+  <script>
+    function switchTab(tabId, element) {
+      // Deactivate all tab buttons
+      let buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+
+      // Hide all tab sections
+      let contents = document.querySelectorAll('.tab-content');
+      contents.forEach(content => content.classList.remove('active'));
+
+      // Activate selected tab
+      element.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+
+      // Toggle Chinese sub-navigation
+      let subNav = document.getElementById('chineseSubNav');
+      if (tabId === 'chinese') {
+        subNav.style.display = 'flex';
+      } else {
+        subNav.style.display = 'none';
+      }
+
+      // Reset search filter
+      document.getElementById('menuSearch').value = '';
+      filterMenu();
+    }
+
+    function filterMenu() {
+      let input = document.getElementById('menuSearch').value.toLowerCase().trim();
+      let activeTab = document.querySelector('.tab-content.active');
+      let items = activeTab.getElementsByClassName('item-card');
+
+      for (let i = 0; i < items.length; i++) {
+        let text = items[i].innerText.toLowerCase();
+        items[i].style.display = text.includes(input) ? "flex" : "none";
+      }
+    }
+  </script>
+</body>
+</html>
